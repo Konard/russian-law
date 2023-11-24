@@ -2,9 +2,7 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const fs = require('fs');
 const path = require('path')
-
-const htmlDir = './data/html/';
-const htmlFile = path.join(htmlDir, 'constitution.html');
+const { saveFile } = require('./files.js');
 
 // Преобразование HTML к JSON
 function htmlToJson(html) {
@@ -48,17 +46,10 @@ function htmlToJson(html) {
   return result;
 }
 
-// Чтение файла
-const html = fs.readFileSync(htmlFile, 'utf8');
+const html = fs.readFileSync('./data/html/constitution.html', 'utf8');
 
 const json = htmlToJson(html);
-console.log('json', json);
+// console.log('json', json);
+// console.log('json.sections[0].chapters', json.sections[0].chapters);
 
-console.log('json.sections[0].chapters', json.sections[0].chapters);
-
-const jsonDir = './data/json/';
-const jsonFile = path.join(jsonDir, 'constitution.json');
-if (!fs.existsSync(jsonDir)){
-  fs.mkdirSync(jsonDir, { recursive: true });
-}
-fs.writeFileSync(jsonFile, JSON.stringify(json, null, 2));
+saveFile('./data/json/constitution.json', JSON.stringify(json, null, 2));
