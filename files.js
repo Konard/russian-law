@@ -6,7 +6,7 @@ function saveFile(filePath, content) {
     if (!fs.existsSync(outputDir)){
         fs.mkdirSync(outputDir, { recursive: true });
     }
-    fs.writeFileSync(filePath, content);
+    fs.writeFileSync(filePath, content, 'utf8');
 }
 
 module.exports = {

@@ -32,6 +32,11 @@ axios({
 })
   .then(function (response) {
     html = iconv.decode(Buffer.from(response.data), 'win1251');
+
+    html = html.replace(/^.*<div\s*id="text_content"\s*>\s*/s, '');
+    html = html.replace(/\s*<\/div>\s*<\/div>\s*<\/body>\s*<\/html>\s*$/s, '');
+    html = html.replace('windows-1251', 'utf-8');
+
     saveFile(directory + fileName , html);
   })
   .catch(function (error) {
