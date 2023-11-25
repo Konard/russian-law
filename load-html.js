@@ -54,8 +54,9 @@ axios({
   .then(function (response) {
     html = iconv.decode(Buffer.from(response.data), 'win1251');
     html = transformHtml(html);
-    saveFile(directory + fileName , html);
+    saveFile(directory + fileName, html);
+    console.log(`Document ${options.name} is loaded`);
   })
   .catch(function (error) {
-    console.error("Ошибка при загрузке страницы:", error);
+    console.error(`Error on load of ${options.name} document`, error);
   });
