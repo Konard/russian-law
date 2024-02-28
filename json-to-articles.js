@@ -20,7 +20,7 @@ function jsonToArticles(law) {
 }
 
 // const documentId = 102027595;
-const documentId = 102041891;
+const documentId = 434767;
 
 const law = JSON.parse(fs.readFileSync(`./data/json/${documentId}.json`, 'utf8'));
 
