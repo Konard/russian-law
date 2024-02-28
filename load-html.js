@@ -22,8 +22,7 @@ if (!options.name || !options.sourceDocumentId) {
   process.exit(1);
 }
 const fileName = options.name + options.extension
-const directory = options.directory.endsWith('/') ? options.directory : options.directory + '/';  
-let html = '';
+const directory = options.directory.endsWith('/') ? options.directory : options.directory + '/';
 
 const url = `http://pravo.gov.ru/proxy/ips/?doc_itself=&nd=${options.sourceDocumentId}&fulltext=1`;
 
@@ -46,13 +45,17 @@ function transformHtml(html) {
   return html;
 }
 
+const second = 1000;
+const minute = 60 * second;
+
 axios({
     url: url,
     method: 'GET',
-    responseType: 'arraybuffer'
+    responseType: 'arraybuffer',
+    timeout: 10 * minute,
 })
   .then(function (response) {
-    html = iconv.decode(Buffer.from(response.data), 'win1251');
+    let html = iconv.decode(Buffer.from(response.data), 'win1251');
     html = transformHtml(html);
     saveFile(directory + fileName, html);
     console.log(`Document ${options.name} is loaded`);
